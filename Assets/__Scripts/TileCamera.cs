@@ -27,7 +27,7 @@ public class TileCamera : MonoBehaviour
                                                             // Read in the map data
         string[] lines = mapData.text.Split('\n'); // b
         H = lines.Length;
-        string[] tileNums = lines[0].Split('');
+        string[] tileNums = lines[0].Split(' ');
         W = tileNums.Length;
         System.Globalization.NumberStyles hexNum; // c
         hexNum = System.Globalization.NumberStyles.HexNumber;
@@ -35,7 +35,7 @@ public class TileCamera : MonoBehaviour
         MAP = new int[W, H];
         for (int j = 0; j < H; j++)
         {
-            tileNums = lines[j].Split('');
+            tileNums = lines[j].Split(' ');
             for (int i = 0; i < W; i++)
             {
                 if (tileNums[i] == "..")
@@ -50,6 +50,28 @@ public class TileCamera : MonoBehaviour
         }
         print("Parsed " + SPRITES.Length + "sprites."); // e
         print("Map size: " + W + "wide by " + H + "high");
+        ShowMap(); // a
+    }
+    /// <summary>
+    /// Generates Tiles for the entire map all at once.
+    /// </summary>
+    void ShowMap()
+    {
+        TILES = new Tile[W, H];
+        // Run through the entire map and instantiate Tiles where necessary
+        for (int j = 0; j < H; j++)
+        {
+            for (int i = 0; i < W; i++)
+            {
+                if (MAP[i, j] != 0)
+                {
+                    Tile ti = Instantiate<Tile>(tilePrefab); // b
+                    ti.transform.SetParent(TILE_ANCHOR);
+                    ti.SetTile(i, j); // c
+                    TILES[i, j] = ti;
+                }
+            }
+        }
     }
     static public int GET_MAP(int x, int y)
     { // f
@@ -59,6 +81,7 @@ public class TileCamera : MonoBehaviour
         }
         return MAP[x, y];
     }
+
     static public int GET_MAP(float x, float y)
     { // A float GET_MAP() overload
         int tX = Mathf.RoundToInt(x);
