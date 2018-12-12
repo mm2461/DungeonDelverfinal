@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public interface IFacingMover
-{ // a
-    int GetFacing(); // b
-    bool moving { get; } // c
+{
+    int GetFacing();
+    bool moving { get; }
     float GetSpeed();
-    float gridMult { get; } // d
-    Vector2 roomPos { get; set; } // e
+    float gridMult { get; }
+    Vector2 roomPos { get; set; }
     Vector2 roomNum { get; set; }
-    Vector2 GetRoomPosOnGrid(float mult = -1); // f
+    Vector2 GetRoomPosOnGrid(float mult = -1);
 }
