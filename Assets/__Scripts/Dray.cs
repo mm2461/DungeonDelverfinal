@@ -17,6 +17,7 @@ public class Dray : MonoBehaviour
     private float timeAtkNext = 0; // c
     private Rigidbody rigid;
     private Animator anim;
+    private InRoom inRm;
     private Vector3[] directions = new Vector3[] {
 Vector3.right, Vector3.up, Vector3.left, Vector3.down };
     private KeyCode[] keys = new KeyCode[] { KeyCode.RightArrow,
@@ -90,5 +91,40 @@ KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow }; // a
             anim.speed = 1;
         }
     }
+    // Implementation of IFacingMover
+    public int GetFacing()
+    { // c
+        return facing;
+    }
+    public bool moving
+    { // d
+        get
+        {
+            return (mode == eMode.move);
+        }
+    }
+    public float GetSpeed()
+    { // e
+        return speed;
+    }
+    public float gridMult
+    {
+        get { return inRm.gridMult; }
+    }
+    public Vector2 roomPos
+    { // f
+        get { return inRm.roomPos; }
+        set { inRm.roomPos = value; }
+    }
+    public Vector2 roomNum
+    {
+        get { return inRm.roomNum; }
+        set { inRm.roomNum = value; }
+    }
+    public Vector2 GetRoomPosOnGrid(float mult = -1)
+    {
+        return inRm.GetRoomPosOnGrid(mult);
+    }
 }
+
     
